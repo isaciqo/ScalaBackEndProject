@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres-payments
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      # Esta linha faz a mágica:
+      # O arquivo local init.sql será executado ao subir o banco
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongo-payments
+    ports:
+      - "27017:27017"
+    restart: always
